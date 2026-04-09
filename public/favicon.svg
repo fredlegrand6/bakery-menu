@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="14" fill="#3d4635"/>
+  <text x="32" y="42" text-anchor="middle" font-family="serif" font-weight="700" font-size="32" fill="#FEFAE0">B</text>
+  <line x1="20" y1="48" x2="44" y2="48" stroke="#C4661F" stroke-width="2"/>
+</svg>
