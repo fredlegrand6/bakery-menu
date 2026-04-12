@@ -41,7 +41,7 @@ export default function Header() {
           animate={{ opacity: 1, y: 0, filter: 'blur(0px) invert(1)' }}
           transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
           draggable={false}
-          className="w-full max-w-[340px] h-auto select-none pointer-events-none"
+          className="w-full max-w-[520px] h-auto select-none pointer-events-none"
           style={{
             mixBlendMode: 'lighten',
             objectFit: 'contain',

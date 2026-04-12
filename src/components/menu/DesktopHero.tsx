@@ -105,7 +105,7 @@ export default function DesktopHero() {
           animate={{ opacity: 1, y: 0, filter: 'blur(0px) invert(1)' }}
           transition={{ duration: 1.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
           draggable={false}
-          className="w-full max-w-[640px] h-auto select-none pointer-events-none mt-6"
+          className="w-full max-w-[1000px] h-auto select-none pointer-events-none mt-4"
           style={{
             mixBlendMode: 'lighten',
             objectFit: 'contain',
