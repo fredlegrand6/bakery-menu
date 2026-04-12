@@ -159,22 +159,36 @@ export default function AdminProductsTab({ onCategoryChange }: { onCategoryChang
             <motion.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.25 }}>
               <ChevronDown size={15} className="text-gold/60" />
             </motion.div>
-            {/* gold initial square — replaces image thumb */}
-            <div
-              className="w-12 h-12 rounded-xl shrink-0 flex items-center justify-center relative overflow-hidden"
-              style={{
-                background:
-                  'linear-gradient(160deg, rgba(212,162,76,0.22), rgba(140,106,42,0.1))',
-                boxShadow: 'inset 0 0 0 1px rgba(212,162,76,0.32)',
-              }}
-            >
-              <span
-                className="font-display text-xl gold-shimmer"
-                style={{ fontVariationSettings: '"SOFT" 20, "opsz" 144, "wght" 500' }}
+            {cat.image_url ? (
+              <img
+                src={cat.image_url}
+                alt={cat.name}
+                style={{
+                  width: 48,
+                  height: 48,
+                  objectFit: 'cover',
+                  borderRadius: 12,
+                  background: '#1a1a1a',
+                  boxShadow: 'inset 0 0 0 1px rgba(212,162,76,0.32)',
+                }}
+                onError={(e) => (e.currentTarget.style.display = 'none')}
+              />
+            ) : (
+              <div
+                className="w-12 h-12 rounded-xl shrink-0 flex items-center justify-center relative overflow-hidden"
+                style={{
+                  background: 'linear-gradient(160deg, rgba(212,162,76,0.22), rgba(140,106,42,0.1))',
+                  boxShadow: 'inset 0 0 0 1px rgba(212,162,76,0.32)',
+                }}
               >
-                {cat.name.charAt(0).toUpperCase()}
-              </span>
-            </div>
+                <span
+                  className="font-display text-xl gold-shimmer"
+                  style={{ fontVariationSettings: '"SOFT" 20, "opsz" 144, "wght" 500' }}
+                >
+                  {cat.name.charAt(0).toUpperCase()}
+                </span>
+              </div>
+            )}
             <div className="flex-1 min-w-0 flex items-center gap-3">
               <span
                 className="font-display text-xl text-cream"

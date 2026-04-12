@@ -112,11 +112,20 @@ export default function AdminAttributesTab({ onCategoryChange }: { onCategoryCha
             <motion.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.25 }}>
               <ChevronDown size={15} className="text-gold/60" />
             </motion.div>
-            <div className="w-12 h-12 rounded-xl shrink-0 flex items-center justify-center relative overflow-hidden" style={{ background: 'linear-gradient(160deg, rgba(212,162,76,0.22), rgba(140,106,42,0.1))', boxShadow: 'inset 0 0 0 1px rgba(212,162,76,0.32)' }}>
-              <span className="font-display text-xl gold-shimmer" style={{ fontVariationSettings: '"SOFT" 20, "opsz" 144, "wght" 500' }}>
-                {cat.name.charAt(0).toUpperCase()}
-              </span>
-            </div>
+            {cat.image_url ? (
+              <img
+                src={cat.image_url}
+                alt={cat.name}
+                style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 12, background: '#1a1a1a', boxShadow: 'inset 0 0 0 1px rgba(212,162,76,0.32)' }}
+                onError={(e) => (e.currentTarget.style.display = 'none')}
+              />
+            ) : (
+              <div className="w-12 h-12 rounded-xl shrink-0 flex items-center justify-center relative overflow-hidden" style={{ background: 'linear-gradient(160deg, rgba(212,162,76,0.22), rgba(140,106,42,0.1))', boxShadow: 'inset 0 0 0 1px rgba(212,162,76,0.32)' }}>
+                <span className="font-display text-xl gold-shimmer" style={{ fontVariationSettings: '"SOFT" 20, "opsz" 144, "wght" 500' }}>
+                  {cat.name.charAt(0).toUpperCase()}
+                </span>
+              </div>
+            )}
             <div className="flex-1 min-w-0 flex items-center gap-3">
               <span className="font-display text-xl text-cream" style={{ fontVariationSettings: '"SOFT" 30, "opsz" 144, "wght" 500' }}>{cat.name}</span>
               <span className={cn('text-[9px] font-medium uppercase tracking-[0.22em] px-2.5 py-1 rounded-full', cat.is_active ? 'bg-gold/15 text-gold border border-gold/30' : 'bg-white/[0.03] text-cream/35 border border-cream/10')}>

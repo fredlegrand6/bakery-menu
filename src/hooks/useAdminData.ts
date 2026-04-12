@@ -15,6 +15,8 @@ export function useAdminCategories(type: 'products' | 'drinks' | 'papiers' | 'at
       .eq('type', type)
       .order('display_order');
 
+    console.log('[useAdminCategories] raw data for type', type, ':', data);
+
     if (data) {
       const sorted = data.map((cat: Record<string, unknown>) => ({
         ...cat,
