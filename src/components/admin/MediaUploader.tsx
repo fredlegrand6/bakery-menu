@@ -90,8 +90,26 @@ export default function MediaUploader({ value, onChange, accept, label }: MediaU
           {isVideo(value) ? (
             <video src={value} className="w-full h-40 object-cover" muted playsInline />
           ) : (
-            <img src={value} alt="" className="w-full h-40 object-cover" />
+            <img
+              src={value}
+              alt=""
+              className="w-full h-40 object-cover"
+              onLoad={() => console.log('[MediaUploader] loaded:', value)}
+              onError={(e) => {
+                console.warn('[MediaUploader] failed to load:', value);
+                const el = e.currentTarget;
+                el.style.display = 'none';
+                const fallback = el.nextElementSibling as HTMLElement | null;
+                if (fallback) fallback.style.display = 'flex';
+              }}
+            />
           )}
+          {/* fallback when img fails — hidden by default, shown via onError */}
+          <div
+            className="hidden w-full h-40 items-center justify-center bg-obsidian text-gold/45 text-[10px] uppercase tracking-[0.22em]"
+          >
+            image unavailable
+          </div>
           <button
             type="button"
             onClick={handleRemove}
