@@ -98,19 +98,19 @@ export default function DesktopHero() {
           <span className="h-px w-12 bg-gold/50" />
         </motion.div>
 
-        <motion.img
-          src="/logo-wordmark.png"
-          alt="The Bakery Ibiza"
-          initial={{ opacity: 0, y: 22, filter: 'blur(14px) invert(1)' }}
-          animate={{ opacity: 1, y: 0, filter: 'blur(0px) invert(1)' }}
-          transition={{ duration: 1.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-          draggable={false}
-          className="w-full max-w-[1000px] h-auto select-none pointer-events-none mt-4"
+        <motion.h1
+          initial={{ opacity: 0, y: 20, filter: 'blur(12px)' }}
+          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          transition={{ duration: 1.5, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+          className="font-display text-center leading-[0.9] mt-6"
           style={{
-            mixBlendMode: 'lighten',
-            objectFit: 'contain',
+            fontVariationSettings: '"SOFT" 0, "opsz" 144, "wght" 700',
+            letterSpacing: '0.02em',
+            fontSize: 'clamp(64px, 8vw, 120px)',
           }}
-        />
+        >
+          <span className="gold-shimmer">THE&nbsp;BAKERY&nbsp;IBIZA</span>
+        </motion.h1>
 
         <motion.div
           initial={{ opacity: 0, scaleX: 0 }}
