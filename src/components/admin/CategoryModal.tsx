@@ -22,6 +22,8 @@ export default function CategoryModal({ open, onClose, onSave, editing }: Catego
 
   useEffect(() => {
     if (open) {
+      console.log('[CategoryModal] opened with editing:', editing);
+      console.log('[CategoryModal] editing?.image_url:', editing?.image_url);
       setName(editing?.name ?? '');
       setDescription(editing?.description ?? '');
       setImageUrl(editing?.image_url ?? null);
