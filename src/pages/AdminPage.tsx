@@ -44,21 +44,33 @@ export default function AdminPage() {
   if (!authed) return <PasswordGate onAuthenticated={() => setAuthed(true)} />;
 
   return (
-    <div className="min-h-screen w-screen flex flex-col lg:flex-row bg-[#252b1e]">
-      {/* Desktop Sidebar */}
-      <aside className="hidden lg:flex flex-col w-80 shrink-0 h-screen sticky top-0 bg-[#1e2318] border-r border-sage/[0.08] overflow-hidden">
-        {/* Grain overlay */}
-        <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[url(&quot;data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E&quot;)] bg-repeat bg-[length:256px_256px]" />
-
-        {/* Logo */}
-        <div className="relative flex flex-col items-center py-8 px-5 border-b border-sage/[0.08]">
-          <img src="/favicon.svg" alt="B" className="h-16 w-auto" />
-          <div className="w-6 h-px bg-terracotta my-2" />
-          <p className="font-accent italic text-sm text-sage/40 tracking-widest">Admin</p>
+    <div className="min-h-screen w-screen flex flex-col lg:flex-row bg-obsidian text-cream">
+      {/* Desktop Sidebar — darker than main content */}
+      <aside
+        className="hidden lg:flex flex-col w-[240px] shrink-0 h-screen sticky top-0 border-r border-gold/10 overflow-hidden"
+        style={{ backgroundColor: '#0d0d0d' }}
+      >
+        {/* brand block */}
+        <div className="relative flex flex-col items-center py-10 px-6 border-b border-gold/10">
+          <img src="/favicon.svg" alt="B" className="h-12 w-auto opacity-95" />
+          <div className="hairline w-20 mt-4" />
+          <span
+            className="font-display mt-3 text-cream"
+            style={{
+              fontVariationSettings: '"SOFT" 20, "opsz" 144, "wght" 500',
+              fontSize: '18px',
+              letterSpacing: '0.02em',
+            }}
+          >
+            The Bakery
+          </span>
+          <span className="font-accent italic text-[11px] text-gold/80 tracking-[0.35em] mt-1">
+            ADMIN
+          </span>
         </div>
 
-        {/* Nav */}
-        <nav className="relative flex-1 px-3 py-4 space-y-1">
+        {/* nav */}
+        <nav className="relative flex-1 px-3 py-6 space-y-1">
           {navItems.map((item) => {
             const Icon = item.icon;
             const active = activeTab === item.key;
@@ -67,61 +79,105 @@ export default function AdminPage() {
                 key={item.key}
                 onClick={() => setActiveTab(item.key)}
                 className={cn(
-                  'w-full flex items-center gap-3 px-5 py-4 rounded-xl text-base font-medium transition-all duration-200',
-                  active
-                    ? 'bg-white/5 text-cream border-l-2 border-l-terracotta'
-                    : 'text-sage/40 hover:text-sage/70 hover:bg-white/[0.02] border-l-2 border-l-transparent'
+                  'group relative w-full flex items-center gap-2.5 pl-4 pr-3 py-3 rounded-xl transition-colors duration-300',
+                  active ? 'text-gold' : 'text-cream/50 hover:text-cream/90'
                 )}
               >
-                <Icon size={20} />
-                {item.label}
+                {active && (
+                  <motion.div
+                    layoutId="admin-nav-indicator"
+                    className="absolute inset-0 rounded-xl"
+                    style={{
+                      background:
+                        'linear-gradient(90deg, rgba(212,162,76,0.13) 0%, rgba(212,162,76,0.02) 100%)',
+                      boxShadow: 'inset 0 0 0 1px rgba(212,162,76,0.28)',
+                    }}
+                    transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+                  />
+                )}
+                {/* gold dot indicator for active */}
+                <span
+                  className={cn(
+                    'relative z-10 w-1.5 h-1.5 rounded-full transition-all duration-300 shrink-0',
+                    active
+                      ? 'bg-gold shadow-[0_0_10px_rgba(212,162,76,0.7)]'
+                      : 'bg-cream/20 group-hover:bg-gold/40'
+                  )}
+                />
+                <Icon
+                  size={15}
+                  strokeWidth={active ? 2 : 1.5}
+                  className="relative z-10"
+                />
+                <span
+                  className={cn(
+                    'relative z-10 text-[11px] uppercase tracking-[0.2em] font-medium whitespace-nowrap',
+                    active ? '' : 'group-hover:text-gold/90'
+                  )}
+                >
+                  {item.label}
+                </span>
               </button>
             );
           })}
         </nav>
 
-        {/* Bottom */}
-        <div className="relative px-5 py-4 border-t border-sage/[0.08]">
-          <div className="flex items-center gap-2 mb-3">
-            <div className="w-2 h-2 rounded-full bg-sage/50" />
-            <span className="text-xs text-sage/40">Logged in</span>
+        {/* bottom block */}
+        <div className="relative px-5 pb-7 pt-4 border-t border-gold/10">
+          <div className="rounded-2xl overflow-hidden glass px-4 py-3 mb-4">
+            <div className="flex items-center gap-2.5">
+              <span className="w-2 h-2 rounded-full bg-gold breathe shrink-0" />
+              <div className="flex-1 min-w-0">
+                <p className="text-[9px] uppercase tracking-[0.24em] text-gold/85 font-medium">
+                  Members Only
+                </p>
+                <p className="font-accent italic text-[11px] text-cream/55 mt-0.5 leading-tight">
+                  Curated in the hills
+                </p>
+              </div>
+            </div>
           </div>
           <button
             onClick={handleLogout}
-            className="flex items-center gap-2 text-sm text-sage/40 hover:text-cream transition-colors duration-200"
+            className="flex items-center gap-2 text-[10px] uppercase tracking-[0.22em] text-cream/45 hover:text-gold transition-colors duration-300"
           >
-            <LogOut size={16} />
+            <LogOut size={12} />
             Logout
           </button>
         </div>
       </aside>
 
       {/* Mobile Header + Tabs */}
-      <div className="lg:hidden sticky top-0 z-30 bg-[rgba(30,35,24,0.97)] backdrop-blur-xl border-b border-sage/[0.08]">
+      <div className="lg:hidden sticky top-0 z-30 glass-soft border-b border-gold/10">
         <div className="flex items-center justify-between px-4 py-3">
           <div className="flex items-center gap-2">
             <img src="/favicon.svg" alt="B" className="h-8 w-auto" />
-            <p className="font-accent italic text-sm text-sage/40">Admin</p>
+            <p className="font-accent italic text-[11px] text-gold/75 tracking-[0.3em]">ADMIN</p>
           </div>
-          <button onClick={handleLogout} className="text-sage/40 hover:text-cream transition-colors">
-            <LogOut size={18} />
+          <button onClick={handleLogout} className="text-cream/50 hover:text-gold transition-colors">
+            <LogOut size={17} />
           </button>
         </div>
-        <div className="relative flex px-4 border-t border-sage/[0.06]">
+        <div className="relative flex px-2 overflow-x-auto border-t border-gold/10">
           {navItems.map((item) => (
             <button
               key={item.key}
               onClick={() => setActiveTab(item.key)}
               className={cn(
-                'relative flex-1 text-center px-3 py-3 text-sm font-medium transition-colors duration-300 -mb-px',
-                activeTab === item.key ? 'text-cream' : 'text-sage/40 hover:text-sage/70'
+                'relative shrink-0 text-center px-4 py-3 text-[11px] uppercase tracking-[0.16em] font-medium transition-colors duration-300',
+                activeTab === item.key ? 'text-gold' : 'text-cream/45 hover:text-cream/80'
               )}
             >
               {item.label}
               {activeTab === item.key && (
                 <motion.div
                   layoutId="admin-tab-underline"
-                  className="absolute bottom-0 left-0 right-0 h-0.5 bg-terracotta"
+                  className="absolute bottom-0 left-2 right-2 h-[2px] rounded-full"
+                  style={{
+                    background:
+                      'linear-gradient(90deg, transparent, rgba(212,162,76,0.95), transparent)',
+                    boxShadow: '0 0 10px rgba(212,162,76,0.5)',
+                  }}
                   transition={{ type: 'spring', stiffness: 400, damping: 30 }}
                 />
               )}
@@ -131,15 +187,33 @@ export default function AdminPage() {
       </div>
 
       {/* Main content area */}
-      <main className="flex-1 min-h-screen overflow-y-auto">
-        <div className="p-6 lg:p-12">
-          {/* Stats bar */}
+      <main className="flex-1 min-h-screen overflow-y-auto relative">
+        {/* ambient glow */}
+        <div
+          aria-hidden
+          className="absolute top-[-15%] left-[30%] w-[60vw] h-[60vw] pointer-events-none aurora-1"
+          style={{
+            background:
+              'radial-gradient(circle at center, rgba(212,162,76,0.07), transparent 60%)',
+            filter: 'blur(90px)',
+          }}
+        />
+        <div className="relative p-6 lg:p-12">
           <AdminStats key={refreshKey} activeTab={activeTab} />
 
           {/* Section heading */}
-          <p className="text-xs text-sage/30 uppercase tracking-widest mb-4">
-            {activeTab === 'qr' ? 'QR CODES' : activeTab.toUpperCase()}
-          </p>
+          <div className="flex items-end justify-between mb-6">
+            <div>
+              <span className="text-[10px] uppercase tracking-[0.35em] text-gold/70">Manage</span>
+              <h1
+                className="font-display text-[32px] text-cream leading-tight mt-1 capitalize"
+                style={{ fontVariationSettings: '"SOFT" 40, "opsz" 144, "wght" 500' }}
+              >
+                {activeTab === 'qr' ? 'QR Codes' : activeTab}
+              </h1>
+              <div className="hairline w-16 mt-2" />
+            </div>
+          </div>
 
           {activeTab === 'products' && <AdminProductsTab onCategoryChange={triggerRefresh} />}
           {activeTab === 'drinks' && <AdminDrinksTab onCategoryChange={triggerRefresh} />}
@@ -172,25 +246,49 @@ function AdminStats({ activeTab }: { activeTab: string }) {
   );
 
   const stats = [
-    { label: 'Total Products', value: totalProducts + totalDrinks },
+    { label: 'Total Items', value: totalProducts + totalDrinks },
     { label: 'Categories', value: totalCategories },
     { label: 'Events', value: events.length },
-    { label: 'Active Items', value: activeItems, dot: true },
+    { label: 'Live Items', value: activeItems, pulse: true },
   ];
 
-  // Only show on matching tabs or always — keep it simple, always show
   if (activeTab === 'qr') return null;
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-      {stats.map((s) => (
-        <div key={s.label} className="bg-[#1e2318] rounded-2xl p-6 border border-sage/[0.06]">
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+      {stats.map((s, i) => (
+        <motion.div
+          key={s.label}
+          initial={{ opacity: 0, y: 16, filter: 'blur(6px)' }}
+          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          transition={{ duration: 0.7, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
+          whileHover={{ y: -3 }}
+          className="relative rounded-2xl glass p-6 overflow-hidden"
+        >
+          {/* gold left border */}
+          <div
+            className="absolute left-0 top-4 bottom-4 w-[2px] rounded-full"
+            style={{
+              background:
+                'linear-gradient(180deg, transparent, rgba(212,162,76,0.85), transparent)',
+              boxShadow: '0 0 10px rgba(212,162,76,0.45)',
+            }}
+          />
           <div className="flex items-center gap-2">
-            <span className="font-display text-4xl text-cream">{s.value}</span>
-            {s.dot && <span className="w-2 h-2 rounded-full bg-terracotta animate-pulse" />}
+            <span
+              className="font-display text-[42px] gold-shimmer leading-none"
+              style={{ fontVariationSettings: '"SOFT" 30, "opsz" 144, "wght" 500' }}
+            >
+              {s.value}
+            </span>
+            {s.pulse && (
+              <span className="w-1.5 h-1.5 rounded-full bg-gold breathe ml-1" />
+            )}
           </div>
-          <p className="text-sm text-sage/50 mt-1">{s.label}</p>
-        </div>
+          <p className="text-[10px] uppercase tracking-[0.22em] text-cream/55 mt-3 font-medium">
+            {s.label}
+          </p>
+        </motion.div>
       ))}
     </div>
   );

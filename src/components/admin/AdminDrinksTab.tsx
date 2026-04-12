@@ -35,7 +35,7 @@ function SortableCategoryCard({ cat, children }: { cat: CategoryWithDrinks; chil
       <div
         {...attributes}
         {...listeners}
-        className="absolute left-2 top-1/2 -translate-y-1/2 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-200 cursor-grab active:cursor-grabbing text-sage/30 hover:text-sage/60 p-2"
+        className="absolute left-2 top-1/2 -translate-y-1/2 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-200 cursor-grab active:cursor-grabbing text-gold/30 hover:text-gold/60 p-2"
       >
         <GripVertical size={16} />
       </div>
@@ -54,9 +54,9 @@ function SortableDrinkRow({ drink, children }: { drink: Drink; children: React.R
   };
   return (
     <div ref={setNodeRef} style={style}>
-      <div className="flex items-center gap-3 p-4 rounded-xl bg-white/[0.03] border border-sage/[0.08] border-l-2 border-l-sage/20 hover:bg-white/[0.04] transition-colors duration-200">
+      <div className="group/row flex items-center gap-3 p-4 rounded-xl bg-white/[0.015] border-b border-gold/10 border-l-2 border-l-transparent hover:border-l-gold/70 hover:bg-gold/[0.03] transition-all duration-300">
         <div {...attributes} {...listeners} className="cursor-grab active:cursor-grabbing">
-          <GripVertical size={14} className="text-sage/30 shrink-0 hover:text-sage/60 transition-colors" />
+          <GripVertical size={14} className="text-gold/30 shrink-0 hover:text-gold/60 transition-colors" />
         </div>
         {children}
       </div>
@@ -148,30 +148,52 @@ export default function AdminDrinksTab({ onCategoryChange }: { onCategoryChange?
       <SortableCategoryCard key={cat.id} cat={cat}>
         <div
           className={cn(
-            'rounded-2xl border border-sage/[0.08] bg-black/20 overflow-hidden transition-all duration-200 ml-6',
-            isOpen && 'border-l-2 border-l-terracotta/30'
+            'group/cat rounded-2xl border-b border-gold/10 border-l-2 border-l-transparent overflow-hidden transition-all duration-300 ml-6',
+            isOpen ? 'bg-gold/[0.025] border-l-gold/70' : 'hover:bg-gold/[0.02] hover:border-l-gold/40'
           )}
         >
           <button
             onClick={() => setExpandedId(isOpen ? null : cat.id)}
-            className="w-full flex items-center gap-3 p-6 text-left"
+            className="w-full flex items-center gap-4 p-5 text-left"
           >
-            <motion.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
-              <ChevronDown size={16} className="text-sage/50" />
+            <motion.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.25 }}>
+              <ChevronDown size={15} className="text-gold/60" />
             </motion.div>
-            {cat.image_url && (
-              <img src={cat.image_url} alt="" className="w-14 h-14 rounded-xl object-cover shrink-0" />
-            )}
-            <div className="flex-1 min-w-0">
-              <span className="font-display text-xl text-cream font-medium">{cat.name}</span>
-              <span className={cn(
-                'ml-2 text-[10px] font-semibold uppercase tracking-widest px-2 py-0.5 rounded-full',
-                cat.is_active ? 'bg-sage/20 text-sage' : 'bg-sage/10 text-sage/40'
-              )}>
+            <div
+              className="w-12 h-12 rounded-xl shrink-0 flex items-center justify-center relative overflow-hidden"
+              style={{
+                background: 'linear-gradient(160deg, rgba(212,162,76,0.22), rgba(140,106,42,0.1))',
+                boxShadow: 'inset 0 0 0 1px rgba(212,162,76,0.32)',
+              }}
+            >
+              <span
+                className="font-display text-xl gold-shimmer"
+                style={{ fontVariationSettings: '"SOFT" 20, "opsz" 144, "wght" 500' }}
+              >
+                {cat.name.charAt(0).toUpperCase()}
+              </span>
+            </div>
+            <div className="flex-1 min-w-0 flex items-center gap-3">
+              <span
+                className="font-display text-xl text-cream"
+                style={{ fontVariationSettings: '"SOFT" 30, "opsz" 144, "wght" 500' }}
+              >
+                {cat.name}
+              </span>
+              <span
+                className={cn(
+                  'text-[9px] font-medium uppercase tracking-[0.22em] px-2.5 py-1 rounded-full',
+                  cat.is_active
+                    ? 'bg-gold/15 text-gold border border-gold/30'
+                    : 'bg-white/[0.03] text-cream/35 border border-cream/10'
+                )}
+              >
                 {cat.is_active ? 'Active' : 'Hidden'}
               </span>
             </div>
-            <span className="bg-sage/10 text-sage text-sm px-2.5 py-0.5 rounded-full">{items.length} items</span>
+            <span className="text-[11px] uppercase tracking-[0.18em] text-cream/55 font-medium tabular-nums">
+              {items.length} <span className="text-cream/35">item{items.length !== 1 ? 's' : ''}</span>
+            </span>
           </button>
 
           <AnimatePresence>
@@ -183,26 +205,26 @@ export default function AdminDrinksTab({ onCategoryChange }: { onCategoryChange?
                 transition={{ duration: 0.2 }}
                 className="overflow-hidden"
               >
-                <div className="px-5 pb-5 space-y-2 border-t border-sage/[0.08] pt-4">
+                <div className="px-5 pb-5 space-y-2 border-t border-gold/10 pt-4">
                   <div className="flex gap-2 mb-3">
                     <button
                       onClick={() => updateCategory(cat.id, { is_active: !cat.is_active })}
                       title={cat.is_active ? 'Hide category' : 'Show category'}
-                      className="w-8 h-8 flex items-center justify-center rounded-xl bg-white/5 text-sage/50 hover:bg-white/10 hover:text-cream transition-colors duration-300"
+                      className="w-8 h-8 flex items-center justify-center rounded-xl bg-white/[0.03] text-gold/60 ring-1 ring-gold/15 hover:bg-gold/10 hover:text-gold hover:ring-gold/40 transition-all duration-300"
                     >
                       {cat.is_active ? <EyeOff size={14} /> : <Eye size={14} />}
                     </button>
                     <button
                       onClick={() => setCatModal({ open: true, editing: cat })}
                       title="Edit category"
-                      className="w-8 h-8 flex items-center justify-center rounded-xl bg-white/5 text-sage/50 hover:bg-white/10 hover:text-cream transition-colors duration-300"
+                      className="w-8 h-8 flex items-center justify-center rounded-xl bg-white/[0.03] text-gold/60 ring-1 ring-gold/15 hover:bg-gold/10 hover:text-gold hover:ring-gold/40 transition-all duration-300"
                     >
                       <Pencil size={14} />
                     </button>
                     <button
                       onClick={() => handleDeleteCategory(cat.id)}
                       title="Delete category"
-                      className="w-8 h-8 flex items-center justify-center rounded-xl bg-white/5 text-red-400/70 hover:bg-red-900/20 hover:text-red-400 transition-colors duration-300"
+                      className="w-8 h-8 flex items-center justify-center rounded-xl bg-white/[0.03] text-red-400/60 ring-1 ring-red-400/15 hover:bg-red-500/10 hover:text-red-300 hover:ring-red-400/40 transition-all duration-300"
                     >
                       <Trash2 size={14} />
                     </button>
@@ -212,26 +234,44 @@ export default function AdminDrinksTab({ onCategoryChange }: { onCategoryChange?
                     <SortableContext items={items.map((d) => d.id)} strategy={verticalListSortingStrategy}>
                       {items.map((drink) => (
                         <SortableDrinkRow key={drink.id} drink={drink}>
-                          {drink.image_url && (
-                            <img src={drink.image_url} alt="" className="w-10 h-10 rounded-lg object-cover shrink-0" />
-                          )}
+                          <div
+                            className="w-10 h-10 rounded-lg shrink-0 flex items-center justify-center overflow-hidden"
+                            style={{
+                              background: 'linear-gradient(160deg, rgba(212,162,76,0.18), rgba(140,106,42,0.08))',
+                              boxShadow: 'inset 0 0 0 1px rgba(212,162,76,0.25)',
+                            }}
+                          >
+                            <span
+                              className="font-display text-sm text-gold"
+                              style={{ fontVariationSettings: '"opsz" 144, "wght" 500' }}
+                            >
+                              {drink.name.charAt(0).toUpperCase()}
+                            </span>
+                          </div>
                           <div className="flex-1 min-w-0">
-                            <p className="text-base text-cream font-medium truncate">{drink.name}</p>
-                            <p className="text-xs text-sage/40">{formatPrice(drink.price_cents)}</p>
+                            <p
+                              className="text-[15px] text-cream truncate font-display"
+                              style={{ fontVariationSettings: '"SOFT" 20, "opsz" 144, "wght" 500' }}
+                            >
+                              {drink.name}
+                            </p>
+                            <p className="text-[10px] uppercase tracking-[0.16em] text-cream/40 mt-0.5">{formatPrice(drink.price_cents)}</p>
                           </div>
                           <button
                             onClick={() => updateDrink(drink.id, { is_available: !drink.is_available }).then(refetch)}
                             className={cn(
-                              'text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full transition-colors duration-300',
-                              drink.is_available ? 'bg-sage/15 text-sage' : 'bg-white/5 text-sage/30'
+                              'text-[9px] font-medium uppercase tracking-[0.2em] px-2.5 py-1 rounded-full border transition-all duration-300',
+                              drink.is_available
+                                ? 'bg-gold/15 text-gold border-gold/35'
+                                : 'bg-white/[0.03] text-cream/35 border-cream/10'
                             )}
                           >
                             {drink.is_available ? 'Live' : 'Off'}
                           </button>
-                          <button onClick={() => setDrinkModal({ open: true, editing: drink, categoryId: cat.id, nextOrder: 0 })} className="text-sage/30 hover:text-cream transition-colors duration-300">
+                          <button onClick={() => setDrinkModal({ open: true, editing: drink, categoryId: cat.id, nextOrder: 0 })} className="text-cream/30 hover:text-gold transition-colors duration-300">
                             <Pencil size={14} />
                           </button>
-                          <button onClick={() => handleDeleteDrink(drink.id)} className="text-sage/30 hover:text-red-400 transition-colors duration-300">
+                          <button onClick={() => handleDeleteDrink(drink.id)} className="text-cream/30 hover:text-red-400 transition-colors duration-300">
                             <Trash2 size={14} />
                           </button>
                         </SortableDrinkRow>
@@ -241,9 +281,9 @@ export default function AdminDrinksTab({ onCategoryChange }: { onCategoryChange?
 
                   <button
                     onClick={() => setDrinkModal({ open: true, editing: null, categoryId: cat.id, nextOrder: items.length })}
-                    className="w-full flex items-center justify-center gap-2 py-4 rounded-xl border border-dashed border-sage/15 text-sage/35 hover:text-sage hover:border-sage/30 text-base transition-colors duration-300"
+                    className="w-full flex items-center justify-center gap-2 py-4 rounded-xl border border-dashed border-gold/20 text-gold/55 hover:text-gold hover:border-gold/50 hover:bg-gold/[0.03] text-[11px] uppercase tracking-[0.2em] font-medium transition-all duration-300"
                   >
-                    <Plus size={14} /> Add Drink
+                    <Plus size={13} /> Add Drink
                   </button>
                 </div>
               </motion.div>
@@ -256,12 +296,17 @@ export default function AdminDrinksTab({ onCategoryChange }: { onCategoryChange?
 
   return (
     <div className="space-y-3">
-      <div className="flex justify-end">
+      <div className="flex justify-end mb-2">
         <button
           onClick={() => setCatModal({ open: true, editing: null })}
-          className="flex items-center gap-2 px-6 py-3 rounded-full bg-terracotta text-cream text-base font-medium hover:bg-terracotta/85 transition-all duration-200 shadow-[0_4px_14px_rgba(196,102,31,0.25)]"
+          className="group relative flex items-center gap-2 px-6 py-3 rounded-full text-[11px] uppercase tracking-[0.22em] font-semibold text-obsidian transition-all duration-300 hover:shadow-[0_10px_30px_-6px_rgba(212,162,76,0.6)]"
+          style={{
+            background: 'linear-gradient(180deg, #E8C17A 0%, #D4A24C 50%, #8C6A2A 100%)',
+            boxShadow: 'inset 0 1px 0 rgba(255,250,224,0.4), inset 0 -1px 0 rgba(0,0,0,0.2), 0 6px 20px -8px rgba(212,162,76,0.5)',
+          }}
         >
-          <Plus size={14} /> Add Category
+          <Plus size={14} strokeWidth={2.5} />
+          Add Category
         </button>
       </div>
 
