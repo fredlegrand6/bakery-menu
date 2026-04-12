@@ -102,8 +102,8 @@ export default function MediaDropZone({ onUrl, currentUrl, accept = 'image', lab
   if (currentUrl) {
     return (
       <div className="space-y-1.5">
-        {label && <label className="text-xs text-sage/60 font-medium">{label}</label>}
-        <div className="relative rounded-lg overflow-hidden border border-sage/15 bg-olive-dark">
+        {label && <label className="text-xs text-gold/70 font-medium">{label}</label>}
+        <div className="relative rounded-lg overflow-hidden border border-gold/20 bg-olive-dark">
           {isVideo(currentUrl) ? (
             <video src={currentUrl} className="w-full h-40 object-cover" muted playsInline />
           ) : (
@@ -124,7 +124,7 @@ export default function MediaDropZone({ onUrl, currentUrl, accept = 'image', lab
   // Upload zone
   return (
     <div className="space-y-1.5">
-      {label && <label className="text-xs text-sage/60 font-medium">{label}</label>}
+      {label && <label className="text-xs text-gold/70 font-medium">{label}</label>}
       <div
         onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); setDragOver(true); }}
         onDragLeave={(e) => { e.preventDefault(); e.stopPropagation(); setDragOver(false); }}
@@ -134,7 +134,7 @@ export default function MediaDropZone({ onUrl, currentUrl, accept = 'image', lab
           'relative flex flex-col items-center justify-center gap-2 p-6 rounded-lg border-2 border-dashed cursor-pointer transition-colors',
           dragOver
             ? 'border-sage bg-sage/10'
-            : 'border-sage/20 hover:border-sage/40 bg-olive-dark/50',
+            : 'border-gold/20 hover:border-gold/40 bg-olive-dark/50',
           uploading && 'pointer-events-none'
         )}
       >
@@ -147,11 +147,11 @@ export default function MediaDropZone({ onUrl, currentUrl, accept = 'image', lab
                 style={{ width: `${progress}%` }}
               />
             </div>
-            <p className="text-xs text-sage/40">Uploading...</p>
+            <p className="text-xs text-cream/45">Uploading...</p>
           </div>
         ) : (
           <>
-            <div className="flex items-center gap-2 text-sage/50">
+            <div className="flex items-center gap-2 text-gold/60">
               {accept === 'video' ? <Film size={20} /> : accept === 'image' ? <Image size={20} /> : (
                 <><Image size={18} /><Film size={18} /></>
               )}

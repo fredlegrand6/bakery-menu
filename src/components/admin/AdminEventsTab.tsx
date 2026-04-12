@@ -24,36 +24,61 @@ export default function AdminEventsTab() {
 
   return (
     <div className="space-y-3">
-      <div className="flex justify-end">
+      <div className="flex justify-end mb-2">
         <button
           onClick={() => setModal({ open: true, editing: null })}
-          className="flex items-center gap-2 text-sm px-5 py-2.5 rounded-full bg-terracotta text-cream font-medium hover:bg-terracotta/85 transition-colors duration-300"
+          className="flex items-center gap-2 px-6 py-3 rounded-full text-[11px] uppercase tracking-[0.22em] font-semibold text-obsidian transition-all duration-300 hover:shadow-[0_10px_30px_-6px_rgba(212,162,76,0.6)]"
+          style={{
+            background: 'linear-gradient(180deg, #E8C17A 0%, #D4A24C 50%, #8C6A2A 100%)',
+            boxShadow: 'inset 0 1px 0 rgba(255,250,224,0.4), inset 0 -1px 0 rgba(0,0,0,0.2), 0 6px 20px -8px rgba(212,162,76,0.5)',
+          }}
         >
-          <Plus size={14} /> Add Event
+          <Plus size={14} strokeWidth={2.5} /> Add Event
         </button>
       </div>
 
       {events.map((event) => {
         const { day, month } = formatDate(event.event_date);
         return (
-          <div key={event.id} className="flex items-center gap-4 p-4 rounded-2xl border border-sage/[0.08] border-l-4 border-l-terracotta bg-black/20">
-            <div className="shrink-0 w-16 h-16 rounded-2xl bg-terracotta/80 flex flex-col items-center justify-center text-cream">
-              <span className="text-2xl font-bold leading-none">{day}</span>
-              <span className="text-[9px] font-semibold tracking-wider">{month}</span>
+          <div
+            key={event.id}
+            className="group/row flex items-center gap-4 p-4 rounded-xl bg-white/[0.015] border-b border-gold/10 border-l-2 border-l-transparent hover:border-l-gold/70 hover:bg-gold/[0.03] transition-all duration-300"
+          >
+            <div
+              className="shrink-0 w-16 h-16 rounded-2xl flex flex-col items-center justify-center relative overflow-hidden"
+              style={{
+                background: 'linear-gradient(160deg, rgba(212,162,76,0.28), rgba(140,106,42,0.15))',
+                boxShadow: 'inset 0 0 0 1px rgba(212,162,76,0.35)',
+              }}
+            >
+              <span
+                className="font-display text-[26px] leading-none text-cream"
+                style={{ fontVariationSettings: '"opsz" 144, "wght" 500' }}
+              >
+                {day}
+              </span>
+              <span className="text-[9px] font-medium tracking-[0.22em] uppercase mt-1 text-gold/90">
+                {month}
+              </span>
             </div>
             <div className="flex-1 min-w-0">
-              <p className="font-display text-base text-cream font-medium truncate">{event.title}</p>
+              <p
+                className="font-display text-[17px] text-cream truncate"
+                style={{ fontVariationSettings: '"SOFT" 30, "opsz" 144, "wght" 500' }}
+              >
+                {event.title}
+              </p>
               {event.description && (
-                <p className="text-sm text-sage/40 truncate mt-0.5">{event.description}</p>
+                <p className="font-accent italic text-[13px] text-cream/45 truncate mt-0.5">{event.description}</p>
               )}
-              <div className="flex items-center gap-2 mt-1">
+              <div className="flex items-center gap-2 mt-1.5">
                 {event.event_type && (
-                  <span className="text-[9px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-sage/15 text-sage border border-sage/10">
+                  <span className="text-[9px] font-medium uppercase tracking-[0.22em] px-2.5 py-1 rounded-full border border-sage/30 text-sage/90 bg-sage/[0.04]">
                     {eventTypeLabel(event.event_type)}
                   </span>
                 )}
                 {event.members_only && (
-                  <span className="flex items-center gap-1 text-[9px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-terracotta/15 text-terracotta border border-terracotta/20">
+                  <span className="flex items-center gap-1 text-[9px] font-medium uppercase tracking-[0.22em] px-2.5 py-1 rounded-full border border-gold/30 text-gold bg-gold/[0.05]">
                     <Lock size={8} /> Members
                   </span>
                 )}
@@ -62,16 +87,24 @@ export default function AdminEventsTab() {
             <button
               onClick={() => updateEvent(event.id, { is_active: !event.is_active })}
               className={cn(
-                'text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full transition-colors duration-300',
-                event.is_active ? 'bg-sage/15 text-sage' : 'bg-white/5 text-sage/30'
+                'text-[9px] font-medium uppercase tracking-[0.2em] px-2.5 py-1 rounded-full border transition-all duration-300',
+                event.is_active
+                  ? 'bg-gold/15 text-gold border-gold/35'
+                  : 'bg-white/[0.03] text-cream/35 border-cream/10'
               )}
             >
               {event.is_active ? 'Active' : 'Off'}
             </button>
-            <button onClick={() => setModal({ open: true, editing: event })} className="text-sage/30 hover:text-cream transition-colors duration-300">
+            <button
+              onClick={() => setModal({ open: true, editing: event })}
+              className="text-cream/30 hover:text-gold transition-colors duration-300"
+            >
               <Pencil size={14} />
             </button>
-            <button onClick={() => handleDelete(event.id)} className="text-sage/30 hover:text-red-400 transition-colors duration-300">
+            <button
+              onClick={() => handleDelete(event.id)}
+              className="text-cream/30 hover:text-red-400 transition-colors duration-300"
+            >
               <Trash2 size={14} />
             </button>
           </div>

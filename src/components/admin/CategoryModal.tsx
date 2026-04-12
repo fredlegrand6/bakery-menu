@@ -50,7 +50,7 @@ export default function CategoryModal({ open, onClose, onSave, editing }: Catego
     }
   };
 
-  const inputClass = 'w-full px-4 py-3 rounded-2xl bg-white/[0.05] border border-sage/15 text-cream placeholder:text-sage/30 focus:outline-none focus:border-terracotta focus:ring-2 focus:ring-terracotta/20 text-sm transition-colors';
+  const inputClass = 'w-full px-4 py-3 rounded-2xl bg-white/[0.03] border border-gold/15 text-cream placeholder:text-cream/30 focus:outline-none focus:border-gold/55 focus:bg-gold/[0.04] focus:shadow-[0_0_0_3px_rgba(212,162,76,0.12)] text-[13px] transition-all duration-300';
 
   return (
     <Modal open={open} onClose={onClose} title={editing ? 'Edit Category' : 'Add Category'}>
@@ -85,7 +85,7 @@ export default function CategoryModal({ open, onClose, onSave, editing }: Catego
         />
 
         <div className="space-y-1">
-          <label className="text-xs text-sage/40 uppercase tracking-wider">Section (optional)</label>
+          <label className="text-[10px] text-gold/70 uppercase tracking-[0.22em] font-medium">Section (optional)</label>
           <select
             value={sectionId ?? ''}
             onChange={(e) => setSectionId(e.target.value || null)}
@@ -102,11 +102,15 @@ export default function CategoryModal({ open, onClose, onSave, editing }: Catego
           <button
             type="submit"
             disabled={saving || !name.trim()}
-            className="w-full py-4 rounded-2xl bg-terracotta text-cream font-display text-base font-semibold disabled:opacity-50 hover:bg-terracotta/90 transition-colors"
+            className="w-full py-4 rounded-2xl text-obsidian text-[12px] uppercase tracking-[0.28em] font-semibold disabled:opacity-40 transition-all duration-300 hover:shadow-[0_12px_32px_-8px_rgba(212,162,76,0.5)]"
+            style={{
+              background: 'linear-gradient(180deg, #E8C17A 0%, #D4A24C 50%, #8C6A2A 100%)',
+              boxShadow: 'inset 0 1px 0 rgba(255,250,224,0.4), inset 0 -1px 0 rgba(0,0,0,0.2), 0 6px 20px -8px rgba(212,162,76,0.5)',
+            }}
           >
             {saving ? 'Saving...' : 'Save'}
           </button>
-          <button type="button" onClick={onClose} className="w-full py-3 rounded-2xl text-sm text-sage/50 hover:text-cream transition-colors">
+          <button type="button" onClick={onClose} className="w-full py-3 rounded-2xl text-[11px] uppercase tracking-[0.22em] text-cream/45 hover:text-gold transition-colors duration-300">
             Cancel
           </button>
         </div>

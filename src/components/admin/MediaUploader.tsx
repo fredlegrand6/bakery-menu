@@ -85,8 +85,8 @@ export default function MediaUploader({ value, onChange, accept, label }: MediaU
   if (value) {
     return (
       <div className="space-y-1.5">
-        {label && <label className="text-xs text-sage/60 font-medium">{label}</label>}
-        <div className="relative rounded-lg overflow-hidden border border-sage/15 bg-olive-dark">
+        {label && <label className="text-[10px] text-gold/70 uppercase tracking-[0.22em] font-medium">{label}</label>}
+        <div className="relative rounded-lg overflow-hidden border border-gold/20 bg-obsidian">
           {isVideo(value) ? (
             <video src={value} className="w-full h-40 object-cover" muted playsInline />
           ) : (
@@ -115,21 +115,21 @@ export default function MediaUploader({ value, onChange, accept, label }: MediaU
         className={cn(
           'flex flex-col items-center justify-center gap-2 p-6 rounded-lg border-2 border-dashed cursor-pointer transition-colors',
           dragOver
-            ? 'border-terracotta bg-terracotta/10'
-            : 'border-sage/20 hover:border-sage/40 bg-olive-dark/50'
+            ? 'border-gold/60 bg-gold/[0.08]'
+            : 'border-gold/20 hover:border-gold/40 bg-white/[0.015]'
         )}
       >
         {uploading ? (
-          <Loader2 size={24} className="text-terracotta animate-spin" />
+          <Loader2 size={24} className="text-gold animate-spin" />
         ) : (
           <>
-            <div className="flex items-center gap-2 text-sage/50">
+            <div className="flex items-center gap-2 text-gold/60">
               {accept === 'video' ? <Film size={20} /> : accept === 'image' ? <Image size={20} /> : (
                 <><Image size={18} /><Film size={18} /></>
               )}
               <Upload size={20} />
             </div>
-            <p className="text-xs text-sage/40 text-center">
+            <p className="text-[11px] uppercase tracking-[0.18em] text-cream/45 text-center">
               Drop {accept === 'both' ? 'image or video' : accept} here or click to browse
             </p>
           </>

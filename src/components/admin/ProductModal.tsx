@@ -95,8 +95,8 @@ export default function ProductModal({ open, onClose, onSave, editing, categoryI
     onClose();
   };
 
-  const inputClass = 'w-full px-4 py-3 rounded-2xl bg-white/[0.05] border border-sage/15 text-cream placeholder:text-sage/30 focus:outline-none focus:border-terracotta focus:ring-2 focus:ring-terracotta/20 text-sm transition-colors';
-  const variantInputClass = 'px-4 py-2.5 rounded-xl bg-white/[0.05] border border-sage/15 text-cream placeholder:text-sage/30 focus:outline-none focus:border-terracotta focus:ring-2 focus:ring-terracotta/20 text-sm transition-colors';
+  const inputClass = 'w-full px-4 py-3 rounded-2xl bg-white/[0.03] border border-gold/15 text-cream placeholder:text-cream/30 focus:outline-none focus:border-gold/55 focus:bg-gold/[0.04] focus:shadow-[0_0_0_3px_rgba(212,162,76,0.12)] text-[13px] transition-all duration-300';
+  const variantInputClass = 'px-4 py-2.5 rounded-xl bg-white/[0.03] border border-gold/15 text-cream placeholder:text-cream/30 focus:outline-none focus:border-gold/55 focus:bg-gold/[0.04] text-[13px] transition-all duration-300';
 
   return (
     <Modal open={open} onClose={onClose} title={editing ? 'Edit Product' : 'Add Product'}>
@@ -114,8 +114,8 @@ export default function ProductModal({ open, onClose, onSave, editing, categoryI
         />
 
         <div className="space-y-2">
-          <label className="text-xs text-sage/50 uppercase tracking-wider">Variants</label>
-          <p className="text-xs italic text-sage/30">Add each size separately — e.g. 1g · 3.5g · 7g · 1 pre-roll</p>
+          <label className="text-[10px] text-gold/70 uppercase tracking-[0.22em] font-medium">Variants</label>
+          <p className="font-accent italic text-[12px] text-cream/45">Add each size separately — e.g. 1g · 3.5g · 7g · 1 pre-roll</p>
 
           {variants.map((v, i) => (
             <div key={i} className="flex items-center gap-2">
@@ -137,7 +137,7 @@ export default function ProductModal({ open, onClose, onSave, editing, categoryI
                   className={variantInputClass + ' w-full'}
                 />
               </div>
-              <button type="button" onClick={() => removeVariant(i)} className="shrink-0 text-sage/40 hover:text-terracotta transition-colors">
+              <button type="button" onClick={() => removeVariant(i)} className="shrink-0 text-cream/40 hover:text-red-400 transition-colors">
                 <X size={16} />
               </button>
             </div>
@@ -162,17 +162,25 @@ export default function ProductModal({ open, onClose, onSave, editing, categoryI
                 className={variantInputClass + ' w-full'}
               />
             </div>
-            <button type="button" onClick={addVariant} className="shrink-0 text-sage hover:text-terracotta transition-colors">
+            <button type="button" onClick={addVariant} className="shrink-0 text-gold/70 hover:text-gold transition-colors">
               <Plus size={16} />
             </button>
           </div>
         </div>
 
         <div className="flex flex-col gap-2 pt-2">
-          <button type="submit" disabled={saving || !name.trim()} className="w-full py-4 rounded-2xl bg-terracotta text-cream font-display text-base font-semibold disabled:opacity-50 hover:bg-terracotta/90 transition-colors">
+          <button
+            type="submit"
+            disabled={saving || !name.trim()}
+            className="w-full py-4 rounded-2xl text-obsidian text-[12px] uppercase tracking-[0.28em] font-semibold disabled:opacity-40 transition-all duration-300 hover:shadow-[0_12px_32px_-8px_rgba(212,162,76,0.5)]"
+            style={{
+              background: 'linear-gradient(180deg, #E8C17A 0%, #D4A24C 50%, #8C6A2A 100%)',
+              boxShadow: 'inset 0 1px 0 rgba(255,250,224,0.4), inset 0 -1px 0 rgba(0,0,0,0.2), 0 6px 20px -8px rgba(212,162,76,0.5)',
+            }}
+          >
             {saving ? 'Saving...' : 'Save'}
           </button>
-          <button type="button" onClick={onClose} className="w-full py-3 rounded-2xl text-sm text-sage/50 hover:text-cream transition-colors">Cancel</button>
+          <button type="button" onClick={onClose} className="w-full py-3 rounded-2xl text-[11px] uppercase tracking-[0.22em] text-cream/45 hover:text-gold transition-colors duration-300">Cancel</button>
         </div>
       </form>
     </Modal>
