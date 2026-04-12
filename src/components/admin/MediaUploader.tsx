@@ -27,7 +27,6 @@ export default function MediaUploader({ value, onChange, accept, label }: MediaU
   const [dragOver, setDragOver] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  console.log('[MediaUploader] render — value:', value, 'accept:', accept);
 
   const upload = useCallback(async (file: File) => {
     setError(null);

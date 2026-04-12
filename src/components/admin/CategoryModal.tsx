@@ -18,17 +18,17 @@ export default function CategoryModal({ open, onClose, onSave, editing }: Catego
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
   const [sectionId, setSectionId] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
+  const [changingImage, setChangingImage] = useState(false);
   const { sections } = useSections();
 
   useEffect(() => {
     if (open) {
-      console.log('[CategoryModal] opened with editing:', editing);
-      console.log('[CategoryModal] editing?.image_url:', editing?.image_url);
       setName(editing?.name ?? '');
       setDescription(editing?.description ?? '');
       setImageUrl(editing?.image_url ?? null);
       setVideoUrl(editing?.video_url ?? null);
       setSectionId(editing?.section_id ?? null);
+      setChangingImage(false);
     }
   }, [open, editing]);
 
@@ -72,12 +72,48 @@ export default function CategoryModal({ open, onClose, onSave, editing }: Catego
           className={inputClass + ' resize-none'}
         />
 
-        <MediaUploader
-          value={imageUrl}
-          onChange={setImageUrl}
-          accept="image"
-          label="Category Image"
-        />
+        {/* Category Image — render stored image directly; toggle to uploader on change */}
+        <div className="space-y-1.5">
+          <label className="text-[10px] text-gold/70 uppercase tracking-[0.22em] font-medium">
+            Category Image
+          </label>
+          {imageUrl && !changingImage ? (
+            <div className="space-y-2">
+              <div className="relative rounded-lg overflow-hidden border border-gold/20 bg-obsidian">
+                <img
+                  src={imageUrl}
+                  alt="category"
+                  className="w-full h-48 object-cover"
+                />
+              </div>
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => setChangingImage(true)}
+                  className="flex-1 py-2 rounded-lg text-[10px] uppercase tracking-[0.2em] font-medium text-gold/80 border border-gold/25 hover:border-gold/50 hover:bg-gold/[0.04] hover:text-gold transition-all duration-300"
+                >
+                  Change Image
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setImageUrl(null)}
+                  className="py-2 px-4 rounded-lg text-[10px] uppercase tracking-[0.2em] font-medium text-cream/45 border border-cream/15 hover:border-red-400/45 hover:text-red-400 transition-all duration-300"
+                >
+                  Remove
+                </button>
+              </div>
+            </div>
+          ) : (
+            <MediaUploader
+              value={null}
+              onChange={(url) => {
+                setImageUrl(url);
+                setChangingImage(false);
+              }}
+              accept="image"
+            />
+          )}
+        </div>
 
         <MediaUploader
           value={videoUrl}
