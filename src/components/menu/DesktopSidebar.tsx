@@ -18,7 +18,7 @@ interface Props {
 
 export default function DesktopSidebar({ active, onChange }: Props) {
   return (
-    <aside className="hidden lg:flex fixed top-0 left-0 z-40 h-screen w-[240px] flex-col border-r border-gold/10 glass-soft">
+    <aside className="hidden lg:flex fixed top-0 left-0 z-40 h-screen w-[200px] flex-col border-r border-gold/10 glass-soft">
       {/* brand block */}
       <div className="px-8 pt-10 pb-8 flex flex-col items-center text-center">
         <img src="/favicon.svg" alt="B" className="h-11 w-auto opacity-90" />

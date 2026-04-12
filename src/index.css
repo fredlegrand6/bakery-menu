@@ -218,6 +218,6 @@ body::after {
 }
 @media (min-width: 1024px) {
   .menu-shell {
-    --sidebar-offset: 240px;
+    --sidebar-offset: 200px;
   }
 }
