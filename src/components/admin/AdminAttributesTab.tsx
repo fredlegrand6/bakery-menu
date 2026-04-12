@@ -155,11 +155,20 @@ export default function AdminAttributesTab({ onCategoryChange }: { onCategoryCha
                     <SortableContext items={items.map((p) => p.id)} strategy={verticalListSortingStrategy}>
                       {items.map((product) => (
                         <SortableProductRow key={product.id} product={product}>
-                          <div className="w-10 h-10 rounded-lg shrink-0 flex items-center justify-center overflow-hidden" style={{ background: 'linear-gradient(160deg, rgba(212,162,76,0.18), rgba(140,106,42,0.08))', boxShadow: 'inset 0 0 0 1px rgba(212,162,76,0.25)' }}>
-                            <span className="font-display text-sm text-gold" style={{ fontVariationSettings: '"opsz" 144, "wght" 500' }}>
-                              {product.name.charAt(0).toUpperCase()}
-                            </span>
-                          </div>
+                          {product.image_url ? (
+                            <img
+                              src={product.image_url}
+                              alt={product.name}
+                              style={{ width: 40, height: 40, objectFit: 'cover', borderRadius: 8, background: '#1a1a1a', boxShadow: 'inset 0 0 0 1px rgba(212,162,76,0.25)', flexShrink: 0 }}
+                              onError={(e) => (e.currentTarget.style.display = 'none')}
+                            />
+                          ) : (
+                            <div className="w-10 h-10 rounded-lg shrink-0 flex items-center justify-center overflow-hidden" style={{ background: 'linear-gradient(160deg, rgba(212,162,76,0.18), rgba(140,106,42,0.08))', boxShadow: 'inset 0 0 0 1px rgba(212,162,76,0.25)' }}>
+                              <span className="font-display text-sm text-gold" style={{ fontVariationSettings: '"opsz" 144, "wght" 500' }}>
+                                {product.name.charAt(0).toUpperCase()}
+                              </span>
+                            </div>
+                          )}
                           <div className="flex-1 min-w-0">
                             <p className="text-[15px] text-cream truncate font-display" style={{ fontVariationSettings: '"SOFT" 20, "opsz" 144, "wght" 500' }}>{product.name}</p>
                             <p className="text-[10px] uppercase tracking-[0.16em] text-cream/40 mt-0.5">

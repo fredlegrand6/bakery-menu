@@ -250,20 +250,37 @@ export default function AdminDrinksTab({ onCategoryChange }: { onCategoryChange?
                     <SortableContext items={items.map((d) => d.id)} strategy={verticalListSortingStrategy}>
                       {items.map((drink) => (
                         <SortableDrinkRow key={drink.id} drink={drink}>
-                          <div
-                            className="w-10 h-10 rounded-lg shrink-0 flex items-center justify-center overflow-hidden"
-                            style={{
-                              background: 'linear-gradient(160deg, rgba(212,162,76,0.18), rgba(140,106,42,0.08))',
-                              boxShadow: 'inset 0 0 0 1px rgba(212,162,76,0.25)',
-                            }}
-                          >
-                            <span
-                              className="font-display text-sm text-gold"
-                              style={{ fontVariationSettings: '"opsz" 144, "wght" 500' }}
+                          {drink.image_url ? (
+                            <img
+                              src={drink.image_url}
+                              alt={drink.name}
+                              style={{
+                                width: 40,
+                                height: 40,
+                                objectFit: 'cover',
+                                borderRadius: 8,
+                                background: '#1a1a1a',
+                                boxShadow: 'inset 0 0 0 1px rgba(212,162,76,0.25)',
+                                flexShrink: 0,
+                              }}
+                              onError={(e) => (e.currentTarget.style.display = 'none')}
+                            />
+                          ) : (
+                            <div
+                              className="w-10 h-10 rounded-lg shrink-0 flex items-center justify-center overflow-hidden"
+                              style={{
+                                background: 'linear-gradient(160deg, rgba(212,162,76,0.18), rgba(140,106,42,0.08))',
+                                boxShadow: 'inset 0 0 0 1px rgba(212,162,76,0.25)',
+                              }}
                             >
-                              {drink.name.charAt(0).toUpperCase()}
-                            </span>
-                          </div>
+                              <span
+                                className="font-display text-sm text-gold"
+                                style={{ fontVariationSettings: '"opsz" 144, "wght" 500' }}
+                              >
+                                {drink.name.charAt(0).toUpperCase()}
+                              </span>
+                            </div>
+                          )}
                           <div className="flex-1 min-w-0">
                             <p
                               className="text-[15px] text-cream truncate font-display"
