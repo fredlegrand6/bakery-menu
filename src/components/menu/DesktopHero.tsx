@@ -99,7 +99,7 @@ export default function DesktopHero() {
         </motion.div>
 
         <motion.img
-          src="/thebakeryibiza%201600x400.png"
+          src="/logo-wordmark.png"
           alt="The Bakery Ibiza"
           initial={{ opacity: 0, y: 22, filter: 'blur(14px) invert(1)' }}
           animate={{ opacity: 1, y: 0, filter: 'blur(0px) invert(1)' }}

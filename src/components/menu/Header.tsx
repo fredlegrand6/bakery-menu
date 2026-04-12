@@ -35,7 +35,7 @@ export default function Header() {
       <div className="relative flex flex-col items-center justify-center pt-14 pb-14 md:pt-20 md:pb-20 px-6">
         {/* Logo wordmark — invert + lighten blend to knock out the white bg */}
         <motion.img
-          src="/thebakeryibiza%201600x400.png"
+          src="/logo-wordmark.png"
           alt="The Bakery Ibiza"
           initial={{ opacity: 0, y: 14, filter: 'blur(10px) invert(1)' }}
           animate={{ opacity: 1, y: 0, filter: 'blur(0px) invert(1)' }}
