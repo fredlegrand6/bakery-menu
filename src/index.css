@@ -1,6 +1,12 @@
 @import "tailwindcss";
 
 @theme {
+  /* obsidian base — warm-toned near-blacks */
+  --color-obsidian: #0A0B07;
+  --color-char: #12140D;
+  --color-smoke: #1B1D14;
+
+  /* earth tones (existing) */
   --color-olive: #5F6F52;
   --color-olive-deep: #3d4635;
   --color-olive-dark: #2a3020;
@@ -10,7 +16,12 @@
   --color-khaki: #B99470;
   --color-terracotta: #C4661F;
 
-  --font-display: 'Playfair Display', serif;
+  /* the new hero: antique warm gold */
+  --color-gold: #D4A24C;
+  --color-gold-soft: #E8C17A;
+  --color-gold-deep: #8C6A2A;
+
+  --font-display: 'Fraunces', 'Playfair Display', serif;
   --font-accent: 'Cormorant Garamond', serif;
   --font-body: 'DM Sans', sans-serif;
 }
@@ -25,24 +36,83 @@ html, body, #root {
   height: 100%;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: var(--font-body);
-  background-color: #3d4635;
+  background-color: #0A0B07;
   color: #FEFAE0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "ss01", "ss02", "kern", "liga";
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
 }
 
+/* Fraunces opsz tuning for display */
+.font-display {
+  font-optical-sizing: auto;
+  font-variation-settings: "SOFT" 30, "opsz" 144;
+  letter-spacing: -0.02em;
+}
+
+/* Warm grain overlay */
 body::after {
   content: '';
   position: fixed;
   inset: 0;
   z-index: 9999;
   pointer-events: none;
-  opacity: 0.035;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.055;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-repeat: repeat;
-  background-size: 256px 256px;
+  background-size: 220px 220px;
+}
+
+/* Slow ambient motion for hero */
+@keyframes drift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(-3%, -2%, 0) scale(1.08); }
+}
+@keyframes drift-2 {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1.05); }
+  50% { transform: translate3d(4%, 3%, 0) scale(1); }
+}
+@keyframes breathe {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 0.9; }
+}
+@keyframes shimmer-text {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.aurora-1 { animation: drift 22s ease-in-out infinite; }
+.aurora-2 { animation: drift-2 28s ease-in-out infinite; }
+.breathe { animation: breathe 6s ease-in-out infinite; }
+
+.gold-shimmer {
+  background: linear-gradient(
+    100deg,
+    #8C6A2A 0%,
+    #D4A24C 25%,
+    #F4DDA0 50%,
+    #D4A24C 75%,
+    #8C6A2A 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer-text 7s linear infinite;
+}
+
+.hairline {
+  background: linear-gradient(90deg, transparent, rgba(212, 162, 76, 0.5), transparent);
+  height: 1px;
 }
 
 ::-webkit-scrollbar {
@@ -52,7 +122,7 @@ body::after {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(169, 179, 136, 0.3);
+  background: rgba(212, 162, 76, 0.25);
   border-radius: 2px;
 }
 
@@ -62,8 +132,42 @@ body::after {
 }
 
 .skeleton {
-  background: linear-gradient(90deg, rgba(169,179,136,0.1) 25%, rgba(169,179,136,0.2) 50%, rgba(169,179,136,0.1) 75%);
+  background: linear-gradient(90deg, rgba(212,162,76,0.06) 25%, rgba(212,162,76,0.14) 50%, rgba(212,162,76,0.06) 75%);
   background-size: 200% 100%;
-  animation: shimmer 2s infinite;
-  border-radius: 8px;
+  animation: shimmer 2.4s infinite;
+  border-radius: 12px;
+}
+
+/* Glass primitives */
+.glass {
+  background:
+    linear-gradient(135deg, rgba(255, 250, 224, 0.05) 0%, rgba(255, 250, 224, 0.01) 50%, rgba(212, 162, 76, 0.035) 100%);
+  backdrop-filter: blur(22px) saturate(140%);
+  -webkit-backdrop-filter: blur(22px) saturate(140%);
+  border: 1px solid rgba(212, 162, 76, 0.12);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 250, 224, 0.07),
+    0 30px 60px -24px rgba(0, 0, 0, 0.7),
+    0 12px 28px -18px rgba(0, 0, 0, 0.6);
+}
+
+.glass-soft {
+  background: rgba(18, 20, 13, 0.58);
+  backdrop-filter: blur(24px) saturate(130%);
+  -webkit-backdrop-filter: blur(24px) saturate(130%);
+  border: 1px solid rgba(212, 162, 76, 0.1);
+}
+
+.glass-dock {
+  background: linear-gradient(180deg, rgba(10, 11, 7, 0.55) 0%, rgba(10, 11, 7, 0.85) 100%);
+  backdrop-filter: blur(28px) saturate(150%);
+  -webkit-backdrop-filter: blur(28px) saturate(150%);
+  border-top: 1px solid rgba(212, 162, 76, 0.14);
+  box-shadow: 0 -20px 60px -20px rgba(0, 0, 0, 0.8);
+}
+
+/* Gold ring focus */
+.ring-gold:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(10,11,7,1), 0 0 0 3px rgba(212, 162, 76, 0.7);
 }

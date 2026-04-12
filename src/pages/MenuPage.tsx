@@ -18,7 +18,7 @@ const tabContent: Record<MenuTab, React.FC> = {
   attributes: AttributesTab,
 };
 
-const sidebarNav: { key: MenuTab; label: string; icon: typeof Leaf }[] = [
+const desktopNav: { key: MenuTab; label: string; icon: typeof Leaf }[] = [
   { key: 'products', label: 'The Good Stuff', icon: Leaf },
   { key: 'drinks', label: 'Drinks & Bar', icon: Wine },
   { key: 'papiers', label: 'Papiers', icon: Scroll },
@@ -31,63 +31,95 @@ export default function MenuPage() {
   const Content = tabContent[activeTab];
 
   return (
-    <div className="min-h-screen w-full bg-[#252b1e]">
-
-      {/* HEADER — mobile */}
-      <div className="md:hidden">
-        <Header />
+    <div className="relative min-h-screen w-full bg-obsidian text-cream">
+      {/* Ambient page atmosphere — very slow gold mist behind everything */}
+      <div aria-hidden className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+        <div
+          className="absolute top-[-20%] left-[-10%] w-[80vw] h-[80vw] aurora-1 opacity-40"
+          style={{
+            background:
+              'radial-gradient(circle at center, rgba(212,162,76,0.14), transparent 60%)',
+            filter: 'blur(80px)',
+          }}
+        />
+        <div
+          className="absolute bottom-[-30%] right-[-20%] w-[90vw] h-[90vw] aurora-2 opacity-35"
+          style={{
+            background:
+              'radial-gradient(circle at center, rgba(95,111,82,0.18), transparent 65%)',
+            filter: 'blur(100px)',
+          }}
+        />
       </div>
 
-      {/* DESKTOP TOP NAV */}
-      <header className="hidden md:block sticky top-0 z-40 bg-[#1e2318]/95 backdrop-blur-md border-b border-sage/10">
-        <div className="px-10 py-5 flex flex-col items-center gap-3">
-          <img src="/favicon.svg" alt="B" className="h-10 w-auto" />
-          <div className="w-6 h-px bg-terracotta" />
-          <span className="font-accent italic text-sm text-sage tracking-[0.4em]">Ibiza</span>
-          <nav className="flex items-center justify-center gap-2 pb-1">
-            {sidebarNav.map((item) => {
-              const Icon = item.icon;
-              const active = activeTab === item.key;
-              return (
-                <button
-                  key={item.key}
-                  onClick={() => setActiveTab(item.key)}
-                  className={cn(
-                    'flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-200',
-                    active
-                      ? 'bg-terracotta text-cream'
-                      : 'text-sage/50 hover:text-sage hover:bg-white/5'
-                  )}
-                >
-                  <Icon size={15} />
-                  {item.label}
-                </button>
-              );
-            })}
-          </nav>
+      <div className="relative z-10">
+        {/* HEADER — mobile */}
+        <div className="md:hidden">
+          <Header />
         </div>
-      </header>
 
-      {/* CONTENT */}
-      <main className="w-full pb-24 md:pb-10">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeTab}
-            initial={{ opacity: 0, x: 8 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -8 }}
-            transition={{ duration: 0.2 }}
-          >
-            <Content />
-          </motion.div>
-        </AnimatePresence>
-      </main>
+        {/* DESKTOP NAV */}
+        <header className="hidden md:block sticky top-0 z-40 glass-soft">
+          <div className="px-10 py-6 flex flex-col items-center gap-3">
+            <img src="/favicon.svg" alt="The Bakery" className="h-10 w-auto opacity-90" />
+            <div className="hairline w-28" />
+            <span className="font-accent italic text-sm text-gold/85 tracking-[0.4em]">
+              Ibiza
+            </span>
+            <nav className="flex items-center justify-center gap-1 pt-1">
+              {desktopNav.map((item) => {
+                const Icon = item.icon;
+                const active = activeTab === item.key;
+                return (
+                  <button
+                    key={item.key}
+                    onClick={() => setActiveTab(item.key)}
+                    className={cn(
+                      'relative flex items-center gap-2 px-5 py-2.5 rounded-full text-[13px] font-medium tracking-wide transition-all duration-300',
+                      active ? 'text-gold' : 'text-cream/45 hover:text-cream/80'
+                    )}
+                  >
+                    {active && (
+                      <motion.span
+                        layoutId="desktop-nav-pill"
+                        className="absolute inset-0 rounded-full"
+                        style={{
+                          background:
+                            'linear-gradient(180deg, rgba(212,162,76,0.16) 0%, rgba(212,162,76,0.04) 100%)',
+                          boxShadow: 'inset 0 0 0 1px rgba(212,162,76,0.4)',
+                        }}
+                        transition={{ type: 'spring', stiffness: 360, damping: 30 }}
+                      />
+                    )}
+                    <Icon size={14} className="relative" />
+                    <span className="relative">{item.label}</span>
+                  </button>
+                );
+              })}
+            </nav>
+          </div>
+        </header>
 
-      {/* MOBILE BOTTOM TAB BAR */}
-      <div className="md:hidden">
-        <TabBar active={activeTab} onChange={setActiveTab} />
+        {/* CONTENT */}
+        <main className="w-full pb-28 md:pb-10">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 10, filter: 'blur(6px)' }}
+              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              exit={{ opacity: 0, y: -6, filter: 'blur(6px)' }}
+              transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <Content />
+            </motion.div>
+          </AnimatePresence>
+        </main>
+
+        {/* MOBILE DOCK */}
+        <div className="md:hidden">
+          <TabBar active={activeTab} onChange={setActiveTab} />
+        </div>
       </div>
-
     </div>
   );
 }

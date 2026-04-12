@@ -4,44 +4,75 @@ import type { BakeryEvent } from '@/lib/types';
 
 interface EventCardProps {
   event: BakeryEvent;
+  index?: number;
 }
 
-export default function EventCard({ event }: EventCardProps) {
+export default function EventCard({ event, index = 0 }: EventCardProps) {
   const { day, month, weekday } = formatDate(event.event_date);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3, ease: 'easeOut' }}
-      className="flex gap-4 p-5 rounded-2xl bg-gradient-to-br from-white/[0.05] to-white/[0.02] border border-sage/[0.08]"
+    <motion.article
+      initial={{ opacity: 0, y: 24, filter: 'blur(6px)' }}
+      whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+      viewport={{ once: true, margin: '-60px' }}
+      transition={{ duration: 0.95, delay: index * 0.07, ease: [0.22, 1, 0.36, 1] }}
+      whileHover={{ y: -3 }}
+      className="group relative flex gap-5 p-5 rounded-[22px] glass overflow-hidden"
     >
-      <div className="shrink-0 w-20 h-20 rounded-xl bg-terracotta flex flex-col items-center justify-center text-cream shadow-[0_4px_16px_rgba(196,102,31,0.25)]">
-        <span className="text-2xl font-bold leading-none">{day}</span>
-        <span className="text-[10px] font-semibold tracking-wider mt-0.5">{month}</span>
+      {/* date stamp */}
+      <div className="shrink-0 w-[76px] h-[88px] rounded-2xl flex flex-col items-center justify-center relative overflow-hidden">
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'linear-gradient(160deg, rgba(212,162,76,0.28) 0%, rgba(140,106,42,0.15) 100%)',
+          }}
+        />
+        <div
+          className="absolute inset-0 ring-1 ring-inset rounded-2xl"
+          style={{ boxShadow: 'inset 0 0 0 1px rgba(212,162,76,0.35)' }}
+        />
+        <span
+          className="relative font-display text-[32px] leading-none text-cream"
+          style={{ fontVariationSettings: '"opsz" 144, "wght" 500' }}
+        >
+          {day}
+        </span>
+        <span className="relative text-[9px] font-medium tracking-[0.25em] uppercase mt-1 text-gold/90">
+          {month}
+        </span>
       </div>
 
-      <div className="flex-1 min-w-0 space-y-1.5">
+      {/* body */}
+      <div className="flex-1 min-w-0 space-y-2">
         <div className="flex items-center gap-2 flex-wrap">
           {event.event_type && (
-            <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-sage/15 text-sage border border-sage/10">
+            <span className="text-[9px] font-medium uppercase tracking-[0.22em] px-2.5 py-1 rounded-full border border-sage/30 text-sage/90 bg-sage/[0.04]">
               {eventTypeLabel(event.event_type)}
             </span>
           )}
           {event.members_only && (
-            <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-terracotta/15 text-terracotta border border-terracotta/20">
+            <span className="text-[9px] font-medium uppercase tracking-[0.22em] px-2.5 py-1 rounded-full border border-gold/30 text-gold bg-gold/[0.05]">
               Members Only
             </span>
           )}
         </div>
-        <h3 className="font-display text-xl font-bold text-cream">{event.title}</h3>
-        <p className="text-xs text-cream/40">
-          {weekday}{event.event_time ? ` · ${event.event_time}` : ''}
+        <h3
+          className="font-display text-[22px] text-cream leading-tight"
+          style={{ fontVariationSettings: '"SOFT" 35, "opsz" 144, "wght" 500' }}
+        >
+          {event.title}
+        </h3>
+        <p className="text-[11px] uppercase tracking-[0.2em] text-cream/45">
+          {weekday}
+          {event.event_time ? ` · ${event.event_time}` : ''}
         </p>
         {event.description && (
-          <p className="text-sm text-cream/55 line-clamp-2">{event.description}</p>
+          <p className="font-accent italic text-[14px] text-cream/60 line-clamp-2 leading-snug">
+            {event.description}
+          </p>
         )}
       </div>
-    </motion.div>
+    </motion.article>
   );
 }

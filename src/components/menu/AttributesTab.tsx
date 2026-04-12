@@ -20,43 +20,39 @@ function CategoryAccordion({ cat, openIds, toggleCategory }: {
         onClick={() => toggleCategory(cat.id)}
         className={cn(
           'md:hidden w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all duration-300',
-          isOpen ? 'bg-[#1e2318] border border-sage/15 rounded-b-none border-b-0' : 'bg-[#1e2318] border border-sage/10'
+          isOpen ? 'glass-soft rounded-b-none border-b-0' : 'glass-soft'
         )}
       >
         <div className="flex items-center gap-3">
-          {cat.image_url && <img src={cat.image_url} alt="" className="w-10 h-10 rounded-xl object-cover" />}
+          <span aria-hidden className="w-1.5 h-8 rounded-full" style={{ background: 'linear-gradient(180deg, rgba(212,162,76,0.85) 0%, rgba(140,106,42,0.2) 100%)', boxShadow: '0 0 12px rgba(212,162,76,0.35)' }} />
           <div className="text-left">
-            <h2 className="font-display text-xl font-bold text-cream leading-tight">{cat.name}</h2>
-            <p className="text-xs text-sage/40 mt-0.5">{cat.bakery_products.length} item{cat.bakery_products.length !== 1 ? 's' : ''}</p>
+            <h2 className="font-display text-[22px] text-cream leading-tight" style={{ fontVariationSettings: '"SOFT" 40, "opsz" 144, "wght" 500' }}>{cat.name}</h2>
+            <p className="text-[10px] uppercase tracking-[0.22em] text-gold/55 mt-1">{cat.bakery_products.length} item{cat.bakery_products.length !== 1 ? 's' : ''}</p>
           </div>
         </div>
-        <motion.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.25, ease: 'easeInOut' }} className={cn('w-8 h-8 rounded-full flex items-center justify-center transition-colors duration-300', isOpen ? 'bg-terracotta text-cream' : 'bg-white/5 text-sage/40')}>
+        <motion.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.25, ease: 'easeInOut' }} className={cn('w-9 h-9 rounded-full flex items-center justify-center transition-colors duration-400', isOpen ? 'bg-gradient-to-b from-gold/90 to-gold-deep text-obsidian shadow-[0_6px_20px_-6px_rgba(212,162,76,0.6)]' : 'bg-white/[0.04] text-gold/60 ring-1 ring-gold/20')}>
           <ChevronDown size={16} />
         </motion.div>
       </button>
       <AnimatePresence initial={false}>
         {isOpen && (
-          <motion.div key="content" initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }} className="md:hidden overflow-hidden bg-[#1e2318] border border-sage/15 border-t-0 rounded-b-2xl">
+          <motion.div key="content" initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }} className="md:hidden overflow-hidden glass-soft border-t-0 rounded-b-2xl">
             <div className="p-4 space-y-4">
-              {cat.description && <p className="font-accent italic text-sm text-sage/60 px-1">{cat.description}</p>}
+              {cat.description && <p className="font-accent italic text-[15px] text-cream/55 px-1 leading-snug">{cat.description}</p>}
               {cat.bakery_products.map((product, i) => (
-                <motion.div key={product.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05, duration: 0.25 }}>
-                  <ProductCard product={product} />
-                </motion.div>
+                <ProductCard key={product.id} product={product} index={i} />
               ))}
             </div>
           </motion.div>
         )}
       </AnimatePresence>
       <div className="hidden md:block mt-2">
-        <h2 className="font-display text-3xl font-bold text-cream">{cat.name}</h2>
-        <div className="border-b border-sage/20 mt-2 mb-4" />
-        {cat.description && <p className="font-accent italic text-base text-sage mb-5">{cat.description}</p>}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+        <h2 className="font-display text-[40px] text-cream leading-tight" style={{ fontVariationSettings: '"SOFT" 50, "opsz" 144, "wght" 400' }}>{cat.name}</h2>
+        <div className="hairline w-full mt-3 mb-5" />
+        {cat.description && <p className="font-accent italic text-lg text-cream/60 mb-6 max-w-2xl">{cat.description}</p>}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-7">
           {cat.bakery_products.map((product, i) => (
-            <motion.div key={product.id} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.06, duration: 0.3, ease: 'easeOut' }}>
-              <ProductCard product={product} />
-            </motion.div>
+            <ProductCard key={product.id} product={product} index={i} />
           ))}
         </div>
       </div>
@@ -83,7 +79,7 @@ export default function AttributesTab() {
           if (sectionCats.length === 0) return null;
           return (
             <div key={section.id}>
-              <div className="px-0 pt-8 pb-1"><h2 className="font-display text-2xl font-bold text-cream">{section.name}</h2><div className="w-10 h-0.5 bg-terracotta mt-2 mb-1" /></div>
+              <div className="px-1 pt-10 pb-2"><span className="text-[10px] uppercase tracking-[0.35em] text-gold/70">Section</span><h2 className="font-display text-[26px] text-cream mt-1" style={{ fontVariationSettings: '"SOFT" 30, "opsz" 144, "wght" 400' }}>{section.name}</h2><div className="hairline w-16 mt-2 mb-2" /></div>
               <div className="space-y-3 md:space-y-14">{sectionCats.map((cat) => <CategoryAccordion key={cat.id} cat={cat} openIds={openIds} toggleCategory={toggleCategory} />)}</div>
             </div>
           );

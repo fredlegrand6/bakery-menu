@@ -12,9 +12,12 @@ const config: Record<MenuTab, { icon: typeof Leaf; message: string }> = {
 export default function EmptyState({ tab }: { tab: MenuTab }) {
   const { icon: Icon, message } = config[tab];
   return (
-    <div className="flex flex-col items-center justify-center py-20 text-sage/50">
-      <Icon size={48} strokeWidth={1} />
-      <p className="mt-4 text-sm">{message}</p>
+    <div className="flex flex-col items-center justify-center py-24 text-gold/55">
+      <div className="relative">
+        <div className="absolute inset-0 rounded-full blur-2xl bg-gold/20 breathe" />
+        <Icon size={44} strokeWidth={1} className="relative" />
+      </div>
+      <p className="mt-5 font-accent italic text-[15px] text-cream/60">{message}</p>
     </div>
   );
 }
