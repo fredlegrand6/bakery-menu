@@ -97,7 +97,7 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
         />
 
         {/* title block — explicit left padding */}
-        <div className="absolute bottom-0 left-0 right-0 pl-6 pr-5 pb-5 pt-4 md:pl-7 md:pr-6 md:pb-6">
+        <div className="absolute bottom-0 left-0 right-0 pl-6 pr-5 pb-5 pt-4 md:pl-7 md:pr-6 md:pb-6 lg:pr-[124px]">
           <h3
             className="font-display text-[26px] md:text-[30px] leading-[1.02] text-cream pl-0.5"
             style={{ fontVariationSettings: '"SOFT" 40, "opsz" 144, "wght" 500' }}
@@ -110,6 +110,32 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
             </p>
           )}
         </div>
+
+        {/* desktop-only price pill (bottom-right) */}
+        {product.variants.length > 0 && (
+          <div className="hidden lg:flex absolute bottom-5 right-5 items-center gap-1.5 rounded-full pl-3 pr-3.5 py-1.5 backdrop-blur-md"
+            style={{
+              background:
+                'linear-gradient(180deg, rgba(212,162,76,0.22) 0%, rgba(140,106,42,0.18) 100%)',
+              boxShadow:
+                'inset 0 0 0 0.5px rgba(232,193,122,0.55), 0 10px 30px -12px rgba(212,162,76,0.5)',
+            }}
+          >
+            {product.variants.length > 1 && (
+              <span className="text-[9px] uppercase tracking-[0.18em] text-gold-soft/85 font-medium">
+                from
+              </span>
+            )}
+            <span
+              className="font-display text-[15px] text-cream leading-none"
+              style={{ fontVariationSettings: '"opsz" 144, "wght" 500' }}
+            >
+              {formatPrice(
+                Math.min(...product.variants.map((v) => v.price_cents))
+              )}
+            </span>
+          </div>
+        )}
       </div>
 
       {/* effect tags */}

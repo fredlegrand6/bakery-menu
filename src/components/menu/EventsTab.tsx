@@ -18,7 +18,7 @@ export default function EventsTab() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="px-6 md:px-12 lg:px-16 py-6 md:py-10 pb-40 md:pb-10"
+        className="px-6 md:px-8 lg:px-0 py-6 md:py-10 lg:pt-4 pb-40 md:pb-10"
       >
         <div className="md:hidden mb-6">
           <span className="text-[10px] uppercase tracking-[0.35em] text-gold/70">Upcoming</span>

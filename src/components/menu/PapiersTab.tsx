@@ -72,7 +72,7 @@ export default function PapiersTab() {
   const unsectioned = categories.filter((c) => !c.section_id);
   return (
     <AnimatePresence mode="wait">
-      <motion.div key="papiers" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="px-4 md:px-12 lg:px-16 py-4 md:py-10 pb-40 md:pb-10 space-y-3 md:space-y-14">
+      <motion.div key="papiers" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="px-4 md:px-8 lg:px-0 py-4 md:py-10 lg:pt-4 pb-40 md:pb-10 space-y-3 md:space-y-14">
         {unsectioned.map((cat) => <CategoryAccordion key={cat.id} cat={cat} openIds={openIds} toggleCategory={toggleCategory} />)}
         {sections.map((section) => {
           const sectionCats = categories.filter((c) => c.section_id === section.id);
