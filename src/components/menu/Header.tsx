@@ -32,50 +32,21 @@ export default function Header() {
         />
       </div>
 
-      <div className="relative flex flex-col items-center justify-center pt-16 pb-16 md:pt-24 md:pb-24 px-6">
-        {/* THE BAKERY — hero wordmark */}
-        <motion.h1
-          initial={{ opacity: 0, y: 18, filter: 'blur(10px)' }}
-          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+      <div className="relative flex flex-col items-center justify-center pt-14 pb-14 md:pt-20 md:pb-20 px-6">
+        {/* Logo wordmark — invert + lighten blend to knock out the white bg */}
+        <motion.img
+          src="/thebakeryibiza%201600x400.png"
+          alt="The Bakery Ibiza"
+          initial={{ opacity: 0, y: 14, filter: 'blur(10px) invert(1)' }}
+          animate={{ opacity: 1, y: 0, filter: 'blur(0px) invert(1)' }}
           transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
-          className="font-display text-center leading-[0.92]"
+          draggable={false}
+          className="w-full max-w-[340px] h-auto select-none pointer-events-none"
           style={{
-            fontVariationSettings: '"SOFT" 0, "opsz" 144, "wght" 700',
-            letterSpacing: '0.015em',
-            fontSize: 'clamp(40px, 10vw, 76px)',
-          }}
-        >
-          <span className="gold-shimmer">THE&nbsp;BAKERY</span>
-        </motion.h1>
-
-        {/* terracotta accent bar (matches og-image) */}
-        <motion.div
-          initial={{ opacity: 0, scaleX: 0 }}
-          animate={{ opacity: 1, scaleX: 1 }}
-          transition={{ duration: 1.1, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-5 h-[2px] w-16 origin-center rounded-full"
-          style={{
-            background:
-              'linear-gradient(90deg, rgba(196,102,31,0), rgba(196,102,31,0.95) 30%, rgba(232,193,122,0.95) 70%, rgba(196,102,31,0))',
-            boxShadow: '0 0 12px rgba(212,162,76,0.35)',
+            mixBlendMode: 'lighten',
+            objectFit: 'contain',
           }}
         />
-
-        {/* IBIZA. — subtitle, spaced */}
-        <motion.p
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.75, ease: 'easeOut' }}
-          className="font-display mt-4 text-cream/75 italic"
-          style={{
-            fontVariationSettings: '"opsz" 144, "wght" 400',
-            letterSpacing: '0.52em',
-            fontSize: 'clamp(14px, 2.8vw, 18px)',
-            paddingLeft: '0.52em',
-          }}
-        >
-          IBIZA.
-        </motion.p>
 
         <motion.p
           initial={{ opacity: 0, y: 6 }}
