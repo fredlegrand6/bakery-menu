@@ -42,7 +42,7 @@ export default function DesktopSidebar({ active, onChange }: Props) {
       <div className="sidebar-rail h-px mx-6" />
 
       {/* nav */}
-      <nav className="flex-1 px-4 py-6 space-y-1">
+      <nav className="flex-1 px-3 py-6 space-y-1">
         {nav.map(({ key, label, icon: Icon }) => {
           const isActive = active === key;
           return (
@@ -50,7 +50,7 @@ export default function DesktopSidebar({ active, onChange }: Props) {
               key={key}
               onClick={() => onChange(key)}
               className={cn(
-                'group relative w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-colors duration-300',
+                'group relative w-full flex items-center gap-2.5 pl-3 pr-2 py-3 rounded-xl transition-colors duration-300',
                 isActive ? 'text-gold' : 'text-cream/55 hover:text-cream/90'
               )}
             >
@@ -85,7 +85,7 @@ export default function DesktopSidebar({ active, onChange }: Props) {
               />
               <span
                 className={cn(
-                  'relative z-10 text-[12px] uppercase tracking-[0.2em] font-medium transition-colors',
+                  'relative z-10 text-[11px] uppercase tracking-[0.14em] font-medium transition-colors whitespace-nowrap',
                   isActive ? '' : 'group-hover:text-gold/90'
                 )}
               >

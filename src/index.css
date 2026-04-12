@@ -211,3 +211,13 @@ body::after {
 .sidebar-rail {
   background: linear-gradient(180deg, transparent, rgba(212,162,76,0.35) 15%, rgba(212,162,76,0.35) 85%, transparent);
 }
+
+/* Sidebar offset variable — enabled at lg breakpoint (1024px+) */
+.menu-shell {
+  --sidebar-offset: 0px;
+}
+@media (min-width: 1024px) {
+  .menu-shell {
+    --sidebar-offset: 240px;
+  }
+}

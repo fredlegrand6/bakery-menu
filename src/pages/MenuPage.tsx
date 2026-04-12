@@ -23,7 +23,7 @@ export default function MenuPage() {
   const Content = tabContent[activeTab];
 
   return (
-    <div className="relative min-h-screen w-full bg-obsidian text-cream">
+    <div className="menu-shell relative min-h-screen w-full bg-obsidian text-cream">
       {/* ambient page atmosphere */}
       <div aria-hidden className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
         <div
@@ -48,7 +48,13 @@ export default function MenuPage() {
       <DesktopSidebar active={activeTab} onChange={setActiveTab} />
 
       {/* MAIN COLUMN — offset by sidebar width on lg */}
-      <div className="relative z-10 lg:ml-[240px] lg:w-[calc(100%-240px)]">
+      <div
+        className="relative z-10"
+        style={{
+          marginLeft: 'var(--sidebar-offset, 0px)',
+          width: 'calc(100% - var(--sidebar-offset, 0px))',
+        }}
+      >
         {/* mobile hero */}
         <div className="lg:hidden">
           <Header />
