@@ -1,5 +1,6 @@
 import { X, Package } from 'lucide-react';
 import { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import type { Product } from '@/lib/types';
 
 interface ProductDetailModalProps {
@@ -27,7 +28,7 @@ export default function ProductDetailModal({
 
   if (!open || !product) return null;
 
-  return (
+  return createPortal(
     <div
       className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center pdm-fade-in"
       style={{ touchAction: 'manipulation' }}
@@ -215,7 +216,8 @@ export default function ProductDetailModal({
           </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
 
