@@ -12,9 +12,9 @@ interface ProductDetailModalProps {
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 const fadeUp = (delay: number) => ({
-  initial: { opacity: 0, y: 14 },
+  initial: { opacity: 0, y: 12 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.55, delay, ease: EASE },
+  transition: { duration: 0.5, delay, ease: EASE },
 });
 
 export default function ProductDetailModal({
@@ -38,30 +38,44 @@ export default function ProductDetailModal({
     <AnimatePresence>
       {open && product && (
         <motion.div
+          key="product-detail-modal"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.35 }}
+          transition={{ duration: 0.3 }}
           className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center"
+          style={{ touchAction: 'manipulation' }}
         >
-          <div
+          {/* backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            onClick={onClose}
             className="absolute inset-0 backdrop-blur-md"
             style={{ backgroundColor: 'rgba(10, 11, 7, 0.82)' }}
-            onClick={onClose}
           />
 
+          {/* content card — slides up from 30px below, always renders */}
           <motion.div
-            initial={{ y: '100%', opacity: 0.6 }}
+            initial={{ y: 30, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            exit={{ y: '100%', opacity: 0 }}
-            transition={{ duration: 0.55, ease: EASE }}
-            className="relative w-full sm:max-w-lg sm:mx-4 max-h-[92vh] overflow-y-auto glass sm:rounded-[20px]"
+            exit={{ y: 30, opacity: 0 }}
+            transition={{ duration: 0.45, ease: EASE }}
+            onClick={(e) => e.stopPropagation()}
+            className="relative z-10 w-full sm:max-w-lg sm:mx-4 max-h-[92vh] overflow-y-auto glass"
             style={{
               borderTopLeftRadius: 20,
               borderTopRightRadius: 20,
+              borderBottomLeftRadius: 0,
+              borderBottomRightRadius: 0,
               backgroundColor: '#0D0D0D',
             }}
           >
+            {/* sm+ rounded all corners */}
+            <div className="hidden sm:block absolute inset-0 rounded-[20px] pointer-events-none" />
+
             {/* handle bar */}
             <div className="sticky top-0 z-10 flex justify-center pt-3 pb-2 pointer-events-none">
               <div className="h-1 w-10 rounded-full bg-gold/35" />
@@ -104,7 +118,7 @@ export default function ProductDetailModal({
               )}
               <div
                 aria-hidden
-                className="absolute inset-0"
+                className="absolute inset-0 pointer-events-none"
                 style={{
                   background:
                     'linear-gradient(to bottom, transparent 55%, rgba(13,13,13,0.6) 80%, #0D0D0D 100%)',
