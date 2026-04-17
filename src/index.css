@@ -221,3 +221,23 @@ body::after {
     --sidebar-offset: 200px;
   }
 }
+
+
+/* Product detail modal — guaranteed visibility, CSS-only animations */
+@keyframes pdm-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes pdm-slide-up {
+  from { transform: translateY(28px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.pdm-fade-in {
+  animation: pdm-fade-in 0.28s ease-out both;
+}
+.pdm-card {
+  animation: pdm-slide-up 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .pdm-fade-in, .pdm-card { animation: none; }
+}
