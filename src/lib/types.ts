@@ -24,6 +24,8 @@ export interface Category {
   updated_at: string;
 }
 
+export type ProductType = 'Sativa' | 'Indica' | 'Hybrid';
+
 export interface Product {
   id: string;
   category_id: string;
@@ -35,6 +37,11 @@ export interface Product {
   variants: ProductVariant[];
   is_available: boolean;
   display_order: number;
+  product_type: ProductType | null;
+  origin: string | null;
+  thc_percentage: number | null;
+  cbd_percentage: number | null;
+  tasting_notes: string[] | null;
   created_at: string;
   updated_at: string;
 }
